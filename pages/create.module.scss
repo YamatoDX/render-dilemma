@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+#heading {
+	margin: 10px;
+	padding: 5px;
+	font-family: 'Dancing Script', cursive;
+	font-size: 3em;
+	text-align: center;
+}
+
+#radio_control {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: block;
+
+	#category {
+		color: red;
+		font-weight: bold;
+	}
+}
+
+#button {
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+	&:hover {
+		background: red;
+		transition: 2s;
+	}
+}
