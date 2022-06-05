@@ -13,7 +13,9 @@ const Entries = async (req: NextApiRequest, res: NextApiResponse) => {
         return finalObject;
       }
     );
-    res.status(200).json(entriesData);
+    res.status(200).json({
+      finalData: entriesData,
+    });
   } catch (e) {
     res.status(400).json({
       message: e.message,

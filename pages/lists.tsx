@@ -11,7 +11,6 @@ const fetcher = async (url: string) => {
 export default function Lists() {
   const { data, error } = useSWR(`/api/entries`, fetcher);
   console.log(`Data: `, data);
-
   if (error) {
     return <Alert>Loading Failed: {error.message}</Alert>;
   }
@@ -24,11 +23,11 @@ export default function Lists() {
     <Container>
       <h1>Lists</h1>
       <Grid container spacing={3}>
-        {data.map((note) => (
+        {data?.["finalData"]?.map((note) => (
           <Grid key={note.id} item xs={12} md={6} lg={4}>
             <NoteLists note={note}></NoteLists>
           </Grid>
-        ))}
+        )) ?? "Data might be corrupted"}
       </Grid>
     </Container>
   );
