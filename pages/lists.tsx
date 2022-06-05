@@ -3,26 +3,13 @@ import { Container } from "@mui/system";
 import useSWR from "swr";
 import NoteLists from "@/components/NoteLists";
 
-const API = `/api/entries`;
-const options = {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
 const fetcher = async (url: string) => {
-  const res = await fetch(url, options);
-
-  if (!res.ok) {
-    throw new Error(`That's an error`);
-  }
-  const data = await res.json();
-
+  const data = await (await fetch(url)).json();
   return data;
 };
 
 export default function Lists() {
-  const { data, error } = useSWR(API, fetcher);
+  const { data, error } = useSWR(`api/entries`, fetcher);
   console.log(`Data: `, data);
 
   if (error) {
