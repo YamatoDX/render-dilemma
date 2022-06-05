@@ -140,15 +140,21 @@ const Create: NextPage = () => {
               alert("Some field missing");
               return;
             }
-            const ref = db.collection("notes").doc(state.title);
-            const { titleError, detailsError, ...rest } = state;
-            ref
-              .set(rest, {
-                merge: false,
-              })
-              .then(() => {
-                console.log("document added");
-              });
+            const config = {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            };
+            const body = {
+              title: state.title,
+              details: state.details,
+              category: state.category,
+            };
+            axios.post(
+              "http://localhost:3000/api/create",
+              JSON.stringify(body),
+              config
+            );
           }}
         >
           Submit

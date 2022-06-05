@@ -1,4 +1,5 @@
-import { Alert, Grid, IconButton, Paper, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import useSWR from "swr";
 import NoteLists from "@/components/NoteLists";
@@ -9,6 +10,10 @@ const fetcher = async (url: string) => {
 };
 
 export default function Lists() {
+  const renderCount = useRef(0);
+  useEffect(() => {
+    renderCount.current = renderCount.current + 1;
+  });
   const { data, error } = useSWR(`/api/entries`, fetcher);
   console.log(`Data: `, data);
   if (error) {
@@ -29,6 +34,12 @@ export default function Lists() {
           </Grid>
         )) ?? "Data might be corrupted"}
       </Grid>
+      <footer
+        style={{
+          textAlign: "center",
+          color: "red",
+        }}
+      >{`This component has rendered ${renderCount.current} times`}</footer>
     </Container>
   );
 }
