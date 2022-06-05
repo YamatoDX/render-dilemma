@@ -1,20 +1,25 @@
-import { db } from '@/firebase/firebase';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { db } from "@/firebase/firebase";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const Entries = async (
-  req: NextApiRequest, 
-  res: NextApiResponse
-  ) => {
-    try {
-      const entries = await db.collection('notes').orderBy("createdAt", "desc").get();
-      const entriesData = entries.docs.map(entry => ({
-        id: entry.id,
-        ...entry.data()
-      }));
-      res.status(200).json(entriesData);
-    } catch (e) {
-        res.status(400).end();
+const Entries = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const entriesData = (await db.collection("notes").get()).docs.map(
+      (each) => {
+        const docData = each.data();
+        const finalObject = {
+          id: docData?._id ?? "",
+          ...docData,
+        };
+        return finalObject;
       }
+    );
+    res.status(200).json(entriesData);
+  } catch (e) {
+    res.status(400).json({
+      message: e.message,
+      status: "failed",
+    });
+  }
 };
 
 export default Entries;

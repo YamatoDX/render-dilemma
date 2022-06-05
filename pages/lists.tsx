@@ -9,7 +9,7 @@ const fetcher = async (url: string) => {
 };
 
 export default function Lists() {
-  const { data, error } = useSWR(`api/entries`, fetcher);
+  const { data, error } = useSWR(`/api/entries`, fetcher);
   console.log(`Data: `, data);
 
   if (error) {
